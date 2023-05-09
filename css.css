@@ -1,0 +1,211 @@
+* {
+	font-family: Verdana, Sans-Serif;
+}
+body {
+	/* background: url("bg.jpeg"); */
+	background-color: #333;
+	margin: 0px;
+}
+p,input {
+	font-size: 12px;
+}
+#logo {
+	width: 100%;
+	text-align: center;
+	background-color: #fff;
+	padding: 10px 0px;
+}
+#c {
+	image-rendering: pixelated;
+}
+table {
+	width: 100%;
+}
+table td {
+	text-align: center;
+}
+#inpFrame {
+	position: relative;
+	text-align: left;
+}
+#inp {
+	padding-left: 30px;
+	font-size: 12px;
+	line-height: 18px;
+	white-space: pre;
+	width: 20vw;
+}
+#lno {
+	position: absolute;
+	color: #aaa;
+	padding-left: 5px;
+	margin-top: 4px;
+	width: 25px;
+	vertical-align: middle;
+	min-height: 16px;
+	font-size: 12px;
+	line-height: 18px;
+	overflow: hidden;
+	user-select: none;
+}
+#code {
+	display: block;
+	text-align: left;
+	border: 1px solid #fff;
+	padding-bottom: 40px;
+	width: 150px;
+	color: #fff;
+}
+.action {
+	display: inline-block;
+	border-radius: 5px;
+	background-color: #fff;
+	height: 40px;
+}
+.action > span {
+	display: inline-block;
+	vertical-align: top;
+	width: 40px;
+	height: 40px;
+}
+.action > span * {
+	max-width: 40px;
+	max-height: 40px;
+}
+#tools > .action > span:first-of-type, #tools > .action > span:last-of-type {
+	display: none;
+}
+#code > .action > span:last-of-type > span {
+	display: block;
+	color: #000;
+	vertical-align: middle;
+	text-align: center;
+	line-height: 40px;
+	font-size: 24px;
+}
+#code:empty:before {
+	content: "Dra kod hit";
+	display: block;
+}
+/*
+.action {
+	display: inline-block;
+	position: relative;
+	text-align: center;
+	color: #fff;
+	width: 40px;
+	height: 40px;
+	background-color: #888;
+	cursor: pointer;
+	transition: background-color 500ms;
+}
+.action:hover {
+	background-color: #888;
+	transition: background-color 50ms;
+}
+#code .action {
+	display: inline-block;
+	width: 80px;
+}
+#code .actioninside {
+	width: 40px;
+	height: 40px;
+	position: relative;
+}
+.actioninside > .actionImg {
+	width: 40px;
+	height: 40px;
+	z-index: 0;
+}
+.action .value {
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	width: 50%;
+	height: 50%;
+	margin: auto;
+	white-space: pre-wrap;
+	z-index: 1;
+}
+#tools .value {
+	display: none;
+}*/
+
+#err {
+	color: #faa;
+	background-color: #333;
+	border: 1px solid #fff;
+	border-radius: 3px;
+	margin-bottom: 10px;
+	padding: 5px;
+	position: absolute;
+}
+#err:empty {
+	display: none;
+}
+#help {
+	position: fixed;
+	top: 5vh;
+	width: 70vw;
+	left: 0;
+	right: 0;
+	height: 85vh;
+	overflow-y: auto;
+	margin: auto;
+	background-color: #fff;
+	border: 2px solid #aaa;
+	border-radius: 10px;
+	padding: 10px;
+	z-index: 1;
+}
+#help h2 {
+	margin: 2px 10px 5px;
+}
+#help h3 {
+	margin: 2px 10px 3px;
+}
+#help table {
+	border-collapse: collapse;
+}
+#help table td, #help table th {
+	padding: 2px 5px;
+	vertical-align: top;
+	text-align: left;
+	border: 1px solid #ddd;
+}
+#help .pre {
+	margin: 1px;
+	display: inline;
+	font-family: Lucida Console, Monaco, Monospace;
+	background-color: #eee;
+}
+#help table p {
+	margin: 0px;
+}
+.notes {
+	position: fixed;
+	margin: auto;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 200px;
+	height: 200px;
+	background-color: #fff;
+	border: 1px solid #000;
+	border-radius: 10px;
+	padding: 20px;
+}
+li {
+	text-align: left;
+}
+.icon {
+	min-height:	16px;
+	max-height:	16px;
+	image-rendering: pixelated;
+}
+
+
+
