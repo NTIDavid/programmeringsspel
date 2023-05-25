@@ -156,7 +156,7 @@ function generateCode() {
 	let els = document.getElementById("code").children;
 	let code = "";
 	let valel = ["right", "left", "up", "down"];
-	
+
 	let translate = {
 		"en": [
 			"right", 
@@ -448,18 +448,23 @@ function drawAll() {
 			draw.rect(x*scale, y*scale, scale, scale, "rgba(0,0,0,0.1)");
 		}
 	}
+
+	function aniPMove(game, action) {
+		draw.ani(game.player.x*game.scale, game.player.y*game.scale, game.scale, game.scale, action);
+	}
+
 	if(game.player.alive) {
-		if((game.player.xm == 0) && (game.player.ym == 0)) {
-			draw.ani(game.player.x*game.scale, game.player.y*game.scale, game.scale, game.scale, "player.down");
-		} else if(game.player.xm > 0) {
-			draw.ani(game.player.x*game.scale, game.player.y*game.scale, game.scale, game.scale, "player.run.right");
-		} else if(game.player.xm < 0) {
-			draw.ani(game.player.x*game.scale, game.player.y*game.scale, game.scale, game.scale, "player.run.left");
-		} else if(game.player.ym > 0) {
-			draw.ani(game.player.x*game.scale, game.player.y*game.scale, game.scale, game.scale, "player.run.down");
-		} else if(game.player.ym < 0) {
-			draw.ani(game.player.x*game.scale, game.player.y*game.scale, game.scale, game.scale, "player.run.up");
-		}
+
+		if((game.player.xm == 0) && (game.player.ym == 0)) { ani(game, "player.down"); } 
+
+		else if(game.player.xm > 0) { aniPMove(game, "player.run.right"); } 
+			
+		else if(game.player.xm < 0) { aniPMove(game, "player.run.left"); }
+			
+		else if(game.player.ym > 0) { aniPMove(game, "player.run.down"); }
+			
+		else if(game.player.ym < 0) { aniPMove(game, "player.run.up"); }
+			
 	} else {
 		draw.ani((game.player.x)*game.scale, (game.player.y)*game.scale, game.scale, game.scale, "drown");
 		draw.ani((game.player.x)*game.scale, (game.player.y-0.5)*game.scale, game.scale, game.scale, "death");
