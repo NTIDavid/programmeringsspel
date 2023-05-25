@@ -116,11 +116,7 @@ function updCode(o) {
 	for(let c = 0; c < list.length; c++) {
 		let e = list[c][1];
 		let my = 0;
-		if(event.target.id === "code") {
-			my = event.offsetY;
-		} else {
-			my = event.target.offsetTop+event.offsetY;
-		}
+		event.target.id === "code" ? my = event.offsetY : my = event.target.offsetTop+exent.offsetY;
 		if(my < list[c][0]) {
 			if(Math.abs((e.offsetTop+(e.offsetHeight/2))-my) < closest[1]) {
 				closest = [e, e.offsetTop];
@@ -179,13 +175,8 @@ function generateCode() {
 		"öppna"
 	];
 	for(let c = 0; c < els.length; c++) {
-		if(valel.indexOf(els[c].id) != -1) {
-			code += translate2[translate1.indexOf(els[c].id)]+"("+els[c].innerText.trim()+");";
-		} else {
-			code += translate2[translate1.indexOf(els[c].id)]+"();";
-		}
+		valel.indexOf(els[c].id) != -1 ? code+= translate2[translate1.indexOf(els[c].id)]+"("+els[c].innerText.trim()+");" : code += translate2[translate1.indexOf(els[c].id)]+"();";
 	}
-	console.log(code);
 	return code;
 }
 
@@ -319,7 +310,7 @@ function ticker() {
 			if(game.actions.length == 0) {
 				if(!winAnimation.on) {
 					stop();
-				}
+				} 
 			} else {
 				game.actions[0].f();
 				game.actionSwitch = false;
@@ -359,32 +350,23 @@ function ticker() {
 							} else {
 								document.getElementById("code").innerHTML = "";
 							}
+							codemode != "blocks" ? document.getElementById("inp").value = "" : document.getElementById("code").innerHTML = "";
 						}
 					} else {
 						nextFunc();
 					}
 				} else {
 					let mod = (level+1)*0.4;
-					if(game.player.x > game.level.player.x) {
-						game.player.xm = -game.speed*mod;
-					} else if(game.player.x < game.level.player.x) {
-						game.player.xm = game.speed*mod;
-					}
-					if(game.player.y > game.level.player.y) {
-						game.player.ym = -game.speed*mod;
-					} else if(game.player.y < game.level.player.y) {
-						game.player.ym = game.speed*mod;
-					} 
+
+					game.player.x > game.level.player.x ? game.player.xm = -game.speed*mod : game.player.x < game.level.player.x ? game.player.xm = game.speed*mod : undefined;
+					
+					game.player.y > game.level.player.y ? game.player.ym = -game.speed*mod : game.player.y < game.level.player.y ? game.player.ym = game.speed*mod : undefined;
 				}
 				game.player.x += game.player.xm;
 				game.player.y += game.player.ym;
 			}
 		} else {
-			if(game.waitingTimer <= 0) {
-				nextFunc();
-			} else {
-				game.waitingTimer--;
-			}
+			game.waitingTimer <= 0 ? nextFunc() : game.waitingTimer--;
 		}
 	}
 	drawAll();
@@ -498,11 +480,7 @@ function drawAll() {
 			draw.ani(scale*q, size.height, scale, scale, "life1");
 		}
 		let scoreText = "";
-		if(game.score == 0) {
-			scoreText = Math.floor(score);
-		} else {
-			scoreText = Math.floor(score)+" + "+Math.floor(game.score);
-		}
+		game.score == 0 ? scoreText = Math.floor(score) : scoreText = Math.floor(score)+" + "+Math.floor(game.score);
 		draw.text((scale*(lives+tlives))+(scale*0.5), size.height+(scale*0.2), "Poäng: "+scoreText, "#fff", 14);
 		if(game.inventory.indexOf("key") != -1) {
 			draw.tile(size.width-scale, size.height, scale, scale, "key");
@@ -582,20 +560,16 @@ function drawAll() {
 					cookie.set("score", score);
 					cookie.set("lives", lives);
 				}
-				if(codemode != "blocks") {
-					document.getElementById("inp").value = "";
-				} else {
-					document.getElementById("code").innerHTML = "";
-				}
+				codemode != "blocks" ? document.getElementById("inp").value = "" : document.getElementById("code").innerHTML = "";
 				game.startTextOn = false;
 				clearTimeout(textTimeout);
 				loadLevel(level);
 				resetGame();
 				saveBG();
 				winAnimation.fadeMode = 1;
-				if((cheating) && (!gameCompleted)) {
+				/* if((cheating) && (!gameCompleted)) {
 					//setTimeout(start, 1000);
-				}
+				} */
 			}
 		}
 		if(winAnimation.y < (-(128*3))-200) {
@@ -697,13 +671,8 @@ function loadLevel(lvl) {
 	//console.log(4000+(game.level.startMessage.length*25)+((lvl==0)?2000:0));
 	game.player.x = game.level.player.x;
 	game.player.y = game.level.player.y;
-	if((cheating) && (cheats[level] != undefined)) {
-		document.getElementById("inp").value = cheats[level];
-	} else {
-		if(cookie.get("inp"+level) !== false) {
-			document.getElementById("inp").value = decodeURIComponent(cookie.get("inp"+level));
-		}
-	}
+
+	(cheating) && (cheats[level] != undefined) ? document.getElementById("inp").value = cheats[level] : cookie.get("inp"+level) !== false ? document.getElementById("inp").value = decodeURIComponent(cookie.get("inp"+level)) : undefined;
 	updLinecount(document.getElementById("inp"));
 }
 // Start variables
@@ -743,9 +712,7 @@ function deleteGame() {
 function updNotes() {
 	nText = [];
 	for(let c in notes) {
-		if(notes[c].lvl == level) {
-			nText.push(notes[c].txt);
-		}
+		notes[c].lvl = level ? nText.push(notes[c].txt) : undefined; 
 	}
 	if(nText.length > 0) {
 		document.getElementById("notesBut").style.display = "inline-block";
@@ -816,9 +783,7 @@ var size1 = null;
 function updMScale() {
 	let c = document.querySelector("#c");
 	setTimeout(function() {
-		if(size1 === null) {
-			size1 = c.getBoundingClientRect().width;
-		}
+		size1 === null ? size1 = c.getBoundingClientRect().width : undefined;
 		c.style.width = "65vw";
 		setTimeout(function() {
 			let size2 = c.getBoundingClientRect().width;
@@ -861,11 +826,8 @@ function loaded() {
 		canvas.addEventListener("mousemove", function(e) {
 			mouse.x = Math.floor(e.offsetX/mouse.scale/scale);
 			mouse.y = Math.floor(e.offsetY/mouse.scale/scale);
-			if((mouse.x >= 0) && (mouse.x <= size.width/scale) && (mouse.y >= 0) && (mouse.y < size.height/scale)) {
-				mouse.on = true;
-			} else {
-				mouse.on = false;
-			}
+		
+			(mouse.x >= 0) && (mouse.x <= size.width/scale) && (mouse.y >= 0) && (mouse.y < size.height/scale) ? mouse.on = true : mouse.on = false;
 			if(mouse.distance.down) {
 				mouse.distance.to.x = mouse.x;
 				mouse.distance.to.y = mouse.y;
@@ -997,9 +959,7 @@ var funcClass = {
 								}
 								if(getAnimation("powerup").frame <= 0) {
 									for(let c in effects) {
-										if(effects[c].id == this.id) {
-											effects.splice(c, 1);
-										}
+										effects[c].id == this.id ? effects.splice(c, 1) : undefined;
 									}
 								}
 							},
@@ -1021,9 +981,7 @@ var funcClass = {
 								}
 								if(getAnimation("powerup").frame <= 0) {
 									for(let c in effects) {
-										if(effects[c].id == this.id) {
-											effects.splice(c, 1);
-										}
+										effects[c].id == this.id ? effects.splice(c, 1) : undefined;
 									}
 								}
 							},
@@ -1044,9 +1002,7 @@ var funcClass = {
 								}
 								if(getAnimation("powerup").frame <= 0) {
 									for(let c in effects) {
-										if(effects[c].id == this.id) {
-											effects.splice(c, 1);
-										}
+										effects[c].id == this.id ? effects.splice(c, 1) : undefined;
 									}
 								}
 							},
@@ -1068,9 +1024,7 @@ var funcClass = {
 								}
 								if(getAnimation("powerup").frame <= 0) {
 									for(let c in effects) {
-										if(effects[c].id == this.id) {
-											effects.splice(c, 1);
-										}
+										effects[c].id == this.id ? effects.splice(c, 1) : undefined;
 									}
 								}
 							},
@@ -1102,9 +1056,7 @@ var funcClass = {
 							}
 							if(getAnimation("powerup").frame <= 0) {
 								for(let c in effects) {
-									if(effects[c].id == this.id) {
-										effects.splice(c, 1);
-									}
+									effects[c].id == this.id ? effects.splice(c, 1) : undefined;
 								}
 							}
 						},
@@ -1141,14 +1093,10 @@ var funcClass = {
 										getAnimation("unlock").frame = 1;
 										this.first = false;
 									}
-									if(getAnimation("unlock").frame == 5) {
-										game.level.maps.imap[pos.y][pos.x] = false;
-									}
+									getAnimation("unlock").frame == 5 ? game.level.maps.imap[pos.y][pos.x] = false: undefined;
 									if(getAnimation("unlock").frame <= 0) {
 										for(let c in effects) {
-											if(effects[c].id == this.id) {
-												effects.splice(c, 1);
-											}
+											effects[c].id == this.id ? effects.splice(c, 1) : undefined;
 										}
 									}
 								},
@@ -1216,11 +1164,7 @@ var funcClass = {
 	finish: {
 		f: function() {
 			game.actionType = "wait";
-			if((game.level.maps.imap[game.level.player.y][game.level.player.x].src == "door") && (game.inventory.indexOf("key") != -1)) {
-				winAnimation.on = true;
-			} else {
-				addEffect("question");
-			}
+			(game.level.maps.imap[game.level.player.y][game.level.player.x].src == "door") && (game.inventory.indexOf("key") != -1) ? winAnimation.on = true : addEffect("question");
 			game.waitingTimer = 70;
 			return this;
 		}
@@ -1256,9 +1200,7 @@ function addEffect(type, x = game.level.player.x, y = game.level.player.y, args 
 				}
 				if(getAnimation("teleport1").frame <= 0) {
 					for(let c in effects) {
-						if(effects[c].id == this.id) {
-							effects.splice(c, 1);
-						}
+						effects[c].id == this.id ? effects.splice(c, 1) : undefined;
 					}
 				}
 			},
@@ -1279,9 +1221,7 @@ function addEffect(type, x = game.level.player.x, y = game.level.player.y, args 
 				}
 				if(getAnimation("teleport2").frame <= 0) {
 					for(let c in effects) {
-						if(effects[c].id == this.id) {
-							effects.splice(c, 1);
-						}
+						effects[c].id == this.id ? effects.splice(c, 1) : undefined;
 					}
 				}
 			},
@@ -1298,9 +1238,7 @@ function addEffect(type, x = game.level.player.x, y = game.level.player.y, args 
 			f: function() {
 				if(this.time <= 0) {
 					for(let c in effects) {
-						if(effects[c].id == this.id) {
-							effects.splice(c, 1);
-						}
+						effects[c].id == this.id ? effects.splice(c, 1) : undefined;
 					}
 				} else {
 					this.time--;	
@@ -1322,9 +1260,7 @@ function addEffect(type, x = game.level.player.x, y = game.level.player.y, args 
 				}
 				if(getAnimation("question").frame <= 0) {
 					for(let c in effects) {
-						if(effects[c].id == this.id) {
-							effects.splice(c, 1);
-						}
+						effects[c].id == this.id ? effects.splice(c, 1) : undefined;
 					}
 				}
 			},
@@ -1411,19 +1347,13 @@ var taboo = [
 var run = function(cmd) {
 	let ok = true;
 	for(let c in taboo) {
-		if(cmd.indexOf(taboo[c]) != -1) {
-			ok = taboo[c];
-		}
+		cmd.indexOf(taboo[c]) != -1 ? ok = taboo[c] : undefined;
 	}
 	if(ok === true) {
 		game.textScore = cmd.length;
-		if(score > 500) {
-			score -= 500;
-		}
+		score > 500 ? score-= 500 : undefined;
 		let tScore = 2500-(game.textScore*5);
-		if(tScore < 0) {
-			tScore = 0;
-		}
+		tScore < 0 ? tScore = 0 : undefined;
 		game.score += tScore;
 		document.getElementById('help').style.display = 'none';
 		document.getElementById('helpbut').style.backgroundColor = '';
@@ -1475,11 +1405,7 @@ function start() {
 	document.getElementById("inp").disabled = true;
 	document.getElementById("but").disabled = true;
 	//document.getElementById("but2").disabled = true;
-	if(codemode !== "blocks") {
-		let ok = window.run(document.getElementById("inp").value);
-	} else {
-		let ok = window.run(generateCode());
-	}
+	codemode !== "blocks" ? window.run(document.getElementById("inp").value) : window.run(generateCode());
 	updLinecount(document.getElementById("inp"));
 }
 function gameover() {
