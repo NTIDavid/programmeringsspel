@@ -156,33 +156,38 @@ function generateCode() {
 	let els = document.getElementById("code").children;
 	let code = "";
 	let valel = ["right", "left", "up", "down"];
-	let translate1 = [
-		"right", 
-		"left", 
-		"up", 
-		"down",
-		"pickup",
-		"teleport",
-		"win",
-		"read",
-		"open"
-	];
-	let translate2 = [
-		"höger", 
-		"vänster", 
-		"upp", 
-		"ner",
-		"ta",
-		"teleportera",
-		"vinn",
-		"läs",
-		"öppna"
-	];
+
+	let translate = {
+		"en": [
+			"right", 
+			"left", 
+			"up", 
+			"down",
+			"pickup",
+			"teleport",
+			"win",
+			"read",
+			"open"	
+		],
+
+		"sv": [
+			"höger", 
+			"vänster", 
+			"upp", 
+			"ner",
+			"ta",
+			"teleportera",
+			"vinn",
+			"läs",
+			"öppna"
+		]
+	}
+
 	for(let c = 0; c < els.length; c++) {
 		if(valel.indexOf(els[c].id) != -1) {
-			code += translate2[translate1.indexOf(els[c].id)]+"("+els[c].innerText.trim()+");";
+			code += translate["sv"][translate["en"].indexOf(els[c].id)]+"("+els[c].innerText.trim()+");";
 		} else {
-			code += translate2[translate1.indexOf(els[c].id)]+"();";
+			code += translate["sv"][translate["en"].indexOf(els[c].id)]+"();";
 		}
 	}
 	console.log(code);
@@ -443,18 +448,23 @@ function drawAll() {
 			draw.rect(x*scale, y*scale, scale, scale, "rgba(0,0,0,0.1)");
 		}
 	}
+
+	function aniPMove(game, action) {
+		draw.ani(game.player.x*game.scale, game.player.y*game.scale, game.scale, game.scale, action);
+	}
+
 	if(game.player.alive) {
-		if((game.player.xm == 0) && (game.player.ym == 0)) {
-			draw.ani(game.player.x*game.scale, game.player.y*game.scale, game.scale, game.scale, "player.down");
-		} else if(game.player.xm > 0) {
-			draw.ani(game.player.x*game.scale, game.player.y*game.scale, game.scale, game.scale, "player.run.right");
-		} else if(game.player.xm < 0) {
-			draw.ani(game.player.x*game.scale, game.player.y*game.scale, game.scale, game.scale, "player.run.left");
-		} else if(game.player.ym > 0) {
-			draw.ani(game.player.x*game.scale, game.player.y*game.scale, game.scale, game.scale, "player.run.down");
-		} else if(game.player.ym < 0) {
-			draw.ani(game.player.x*game.scale, game.player.y*game.scale, game.scale, game.scale, "player.run.up");
-		}
+
+		if((game.player.xm == 0) && (game.player.ym == 0)) { ani(game, "player.down"); } 
+
+		else if(game.player.xm > 0) { aniPMove(game, "player.run.right"); } 
+			
+		else if(game.player.xm < 0) { aniPMove(game, "player.run.left"); }
+			
+		else if(game.player.ym > 0) { aniPMove(game, "player.run.down"); }
+			
+		else if(game.player.ym < 0) { aniPMove(game, "player.run.up"); }
+			
 	} else {
 		draw.ani((game.player.x)*game.scale, (game.player.y)*game.scale, game.scale, game.scale, "drown");
 		draw.ani((game.player.x)*game.scale, (game.player.y-0.5)*game.scale, game.scale, game.scale, "death");
