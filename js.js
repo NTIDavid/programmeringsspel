@@ -310,7 +310,7 @@ function ticker() {
 			if(game.actions.length == 0) {
 				if(!winAnimation.on) {
 					stop();
-				}
+				} 
 			} else {
 				game.actions[0].f();
 				game.actionSwitch = false;
@@ -567,9 +567,9 @@ function drawAll() {
 				resetGame();
 				saveBG();
 				winAnimation.fadeMode = 1;
-				if((cheating) && (!gameCompleted)) {
+				/* if((cheating) && (!gameCompleted)) {
 					//setTimeout(start, 1000);
-				}
+				} */
 			}
 		}
 		if(winAnimation.y < (-(128*3))-200) {
