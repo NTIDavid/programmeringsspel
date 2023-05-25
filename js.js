@@ -358,9 +358,9 @@ function ticker() {
 				} else {
 					let mod = (level+1)*0.4;
 
-					game.player.x > game.level.player.x ? game.player.xm = -game.speed*mod : game.player.x < game.level.player.x ? game.plater.xm = game.speed * mod : undefined;
+					game.player.x > game.level.player.x ? game.player.xm = -game.speed*mod : game.player.x < game.level.player.x ? game.player.xm = game.speed*mod : undefined;
 					
-					game.player.y > game.level.player.y ? game.player.ym = -game.speed*mod : game.platyer.y < game.level.player.y ? game.plater.ym = game.speed*mod : undefined;
+					game.player.y > game.level.player.y ? game.player.ym = -game.speed*mod : game.player.y < game.level.player.y ? game.player.ym = game.speed*mod : undefined;
 				}
 				game.player.x += game.player.xm;
 				game.player.y += game.player.ym;
