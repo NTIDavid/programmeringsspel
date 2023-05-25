@@ -157,32 +157,43 @@ function generateCode() {
 	let code = "";
 	let valel = ["right", "left", "up", "down"];
 	let translate1 = [
-		"right", 
-		"left", 
-		"up", 
-		"down",
-		"pickup",
-		"teleport",
-		"win",
-		"read",
-		"open"
+		
 	];
 	let translate2 = [
-		"höger", 
-		"vänster", 
-		"upp", 
-		"ner",
-		"ta",
-		"teleportera",
-		"vinn",
-		"läs",
-		"öppna"
+		
 	];
+
+	let translate = {
+		"en": [
+			"right", 
+			"left", 
+			"up", 
+			"down",
+			"pickup",
+			"teleport",
+			"win",
+			"read",
+			"open"	
+		],
+
+		"sv": [
+			"höger", 
+			"vänster", 
+			"upp", 
+			"ner",
+			"ta",
+			"teleportera",
+			"vinn",
+			"läs",
+			"öppna"
+		]
+	}
+
 	for(let c = 0; c < els.length; c++) {
 		if(valel.indexOf(els[c].id) != -1) {
-			code += translate2[translate1.indexOf(els[c].id)]+"("+els[c].innerText.trim()+");";
+			code += translate["sv"][translate["en"].indexOf(els[c].id)]+"("+els[c].innerText.trim()+");";
 		} else {
-			code += translate2[translate1.indexOf(els[c].id)]+"();";
+			code += translate["sv"][translate["en"].indexOf(els[c].id)]+"();";
 		}
 	}
 	console.log(code);
