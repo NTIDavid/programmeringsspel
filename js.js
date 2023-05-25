@@ -156,13 +156,7 @@ function generateCode() {
 	let els = document.getElementById("code").children;
 	let code = "";
 	let valel = ["right", "left", "up", "down"];
-	let translate1 = [
-		
-	];
-	let translate2 = [
-		
-	];
-
+	
 	let translate = {
 		"en": [
 			"right", 
